@@ -1,29 +1,12 @@
 const request = require('supertest');
-const app = require('../src/app');
-const User = require('../models/User');
-const List = require('../models/List');
-const Item = require('../models/Item');
+const app = require('../src/app')
+const User = require('../src/models/User');
+const List = require('../src/models/List');
+const Item = require('../src/models/Item');
 const jwt = require('jsonwebtoken');
 
 let token;
 let userId;
-
-beforeAll(async () => {
-  await mongoose.connect(process.env.MONGODB_URI);
-  
-  const user = new User({
-    username: 'testuser',
-    password: 'password123'
-  });
-  await user.save();
-  userId = user._id;
-  
-  token = jwt.sign({ id: userId }, process.env.JWT_SECRET);
-});
-
-afterAll(async () => {
-  await mongoose.connection.close();
-});
 
 describe('Todo List Tests', () => {
   beforeEach(async () => {
